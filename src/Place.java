@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Place {
 	private String placeName;
-	private Enemy placeEnemy;
+	private Raider placeRaider;
 	private Food placeFoodStash;
 	private Drinkable placeDrinkStash;
 	private Medicine placeMedicineStash;
 
 
-	Place(String _name, Enemy _enemy, Food _food, Drinkable _drink, Medicine _medicine){
+	Place(String _name, Raider _raider, Food _food, Drinkable _drink, Medicine _medicine){
 		placeName = _name;
-		placeEnemy = _enemy;
+		placeRaider = _raider;
 		placeFoodStash = _food;
 		placeDrinkStash = _drink;
 		placeMedicineStash = _medicine;
@@ -21,20 +21,18 @@ public class Place {
 	}
 	public void Discover(Player _player){
 		Scanner scanner = new Scanner(System.in);
-
+		System.out.println("============================================================");
 		System.out.println("You have discovered " + placeName);
 		System.out.println("What do you want to do?");
 		System.out.println(" [1] Look around \n [2] Keep going");
 		
 		byte choice = scanner.nextByte();
-		scanner.close();
 		switch (choice) {
 			case 1:
-			if (placeEnemy != null){
-				System.out.println("> You get attacked by a " + placeEnemy.GetName() + "!");
-				placeEnemy.StartCombat(_player);
+			if (placeRaider != null){
+				placeRaider.Combat(_player);
 			}		
-			System.out.println("> You see " + placeFoodStash.GetName() + ", " + placeDrinkStash.GetDrinkName() + ", " + placeMedicineStash.GetName());
+			System.out.println("> In " + placeName + " You see " + placeFoodStash.GetName() + ", " + placeDrinkStash.GetDrinkName() + ", " + placeMedicineStash.GetName());
 			_player.StoreFood(placeFoodStash, 0);
 			_player.StoreDrink(placeDrinkStash, 0);
 			_player.StoreMedicine(placeMedicineStash, 0);
